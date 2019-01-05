@@ -34,42 +34,7 @@ router.post('/celebrities/new', (req, res, next) => {
   })
 });
 
-/* EDIT Documents */
-router.get('/celebrities/edit', (req, res, next) => {
-  Celebrity.findOne({_id: req.query.celebrity_id})
-  .then((celebrity) => {
-    res.render("celebrities/edit", {celebrity});
-  })
-  .catch((error) => {
-    console.log(error);
-  })
-});
 
-
-router.post('/celebrities/edit', (req, res, next) => {
-  const { name, occupation, catchPhrase } = req.body;
-  Celebrity.update({_id: req.query.celebrity_id}, { $set: {name, occupation, catchPhrase }})
-  .then((celebrity) => {
-    res.redirect('/celebrities');
-  })
-  .catch((error) => {
-    console.log(error);
-  })
-});
-
-
-
-/* POST route to delete celebrity */
-router.post('/celebrities/:id/delete', (req, res, next) => {
-  let celebrityId = req.params.id;
-  Celebrity.findByIdAndRemove({_id: celebrityId})
-    .then(celebrity => {
-      res.redirect('/celebrities');
-    })
-    .catch(error => {
-      console.log(error)
-    })
-});
 
 /* GET celebrities details page */
 router.get('/celebrities/:id', (req, res, next) => {
@@ -83,4 +48,39 @@ router.get('/celebrities/:id', (req, res, next) => {
     })
 });
 
+/* EDIT a celebrity */
+router.get('/celebrities/:id/edit', (req, res, next) => {
+  let celebrityId = req.params.id;
+  Celebrity.findOne({_id: celebrityId})
+  .then(celebrity => {
+    res.render("celebrities/edit", {celebrity});
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+});
+
+router.post('/celebrities/:id', (req, res, next) => {
+  const { name, occupation, catchPhrase } = req.body;
+  Celebrity.update({_id: req.query.celebrity_id}, { $set: {name, occupation, catchPhrase }})
+  .then((celebrity) => {
+    res.redirect('/celebrities');
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+});
+
+
+/* POST route to delete celebrity */
+router.post('/celebrities/:id/delete', (req, res, next) => {
+  let celebrityId = req.params.id;
+  Celebrity.findByIdAndRemove({_id: celebrityId})
+    .then(celebrity => {
+      res.redirect('/celebrities');
+    })
+    .catch(error => {
+      console.log(error)
+    })
+});
 module.exports = router;

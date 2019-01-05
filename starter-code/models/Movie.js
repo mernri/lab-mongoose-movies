@@ -5,7 +5,8 @@ const movieSchema = new Schema(
   {
     title: String,
     genre: String,
-    plot: String
+    plot: String,
+    actors: [ { type : mongoose.Schema.Types.ObjectId, ref: 'Celebrity' } ] // Added for linking celebrities and movies
   },
   {
     timestamps: {
@@ -16,5 +17,6 @@ const movieSchema = new Schema(
 );
 
 const Movie = mongoose.model("Movie", movieSchema);
+
 
 module.exports = Movie;

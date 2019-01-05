@@ -3,3 +3,10 @@
 <p>{{movie.title}}</p>
 <p>{{movie.genre}}</p>
 <p>{{movie.plot}}</p>
+<p>Actors:</p>>
+<ul>
+  {{#each movie.actors}}
+  <li> {{this.name}} </li>
+  {{/each}} 
+  <a href="/movies/{{movie._id}}/addcelebrity"> Add Celebrity </a>
+</ul>
